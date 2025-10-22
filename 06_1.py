@@ -1,31 +1,25 @@
 def total_salary(path):
-    # Спробуємо відкрити файл за допомогою менеджера контексту with
+    # Відкриття файлу за допомогою with
     try:
-        # Використовуємо with для автоматичного закриття файлу
         with open(path, 'r', encoding='utf-8') as file:
             total = 0  # тут буде сума всіх зарплат
             count = 0  # тут буде кількість розробників
             
-            # Читаємо файл по рядках
+            # Читаємо файл по рядках, прибираємо пробіли та розділяємо по комі 
             for line in file:
-                line = line.strip()  # прибираємо зайві пробіли
-                if line:  # якщо рядок не порожній
-                    # Розділяємо рядок по комі
+                line = line.strip()
+                if line:
                     parts = line.split(',')
                     
-                    # Перевіряємо що отримали 2 частини
+                    # Перевірка 2 частин
                     if len(parts) == 2:
-                        name = parts[0]    # перша частина - ім'я
-                        salary = parts[1]  # друга частина - зарплата
+                        name = parts[0]    
+                        salary = parts[1]  
                         
-                        # Перетворюємо зарплату в число
                         salary_number = int(salary)
                         
-                        # Додаємо до загальної суми
                         total += salary_number
                         count += 1
-            
-            # Файл автоматично закриється після виходу з блоку with
             
             # Якщо знайшли хоча б одного розробника
             if count > 0:
@@ -54,7 +48,6 @@ if __name__ == "__main__":
         f.write("Anna Borisenko,1500\n")
         f.write("Denis Rubalko,2500\n")
     
-    # Викликаємо нашу функцію
     total, average = total_salary("test_salaries.txt")
     
     print(f"Загальна сума заробітної плати: {total}")
