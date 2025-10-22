@@ -1,41 +1,39 @@
 def total_salary(path):
-    # Пробуємо відкрити файл
+    # Спробуємо відкрити файл за допомогою менеджера контексту with
     try:
-        # Відкриваємо файл для читання
-        file = open(path, 'r', encoding='utf-8')
-        
-        total = 0  # тут буде сума всіх зарплат
-        count = 0  # тут буде кількість розробників
-        
-        # Читаємо файл по рядках
-        for line in file:
-            line = line.strip()  # прибираємо зайві пробіли
-            if line:  # якщо рядок не порожній
-                # Розділяємо рядок по комі
-                parts = line.split(',')
-                
-                # Перевіряємо що отримали 2 частини
-                if len(parts) == 2:
-                    name = parts[0]    # перша частина - ім'я
-                    salary = parts[1]  # друга частина - зарплата
-                    
-                    # Перетворюємо зарплату в число
-                    salary_number = int(salary)
-                    
-                    # Додаємо до загальної суми
-                    total += salary_number
-                    count += 1
-        
-        # Закриваємо файл
-        file.close()
-        
-        # Якщо знайшли хоча б одного розробника
-        if count > 0:
-            average = total / count
-            return (total, average)
-        else:
-            return (0, 0)
+        # Використовуємо with для автоматичного закриття файлу
+        with open(path, 'r', encoding='utf-8') as file:
+            total = 0  # тут буде сума всіх зарплат
+            count = 0  # тут буде кількість розробників
             
+            # Читаємо файл по рядках
+            for line in file:
+                line = line.strip()  # прибираємо зайві пробіли
+                if line:  # якщо рядок не порожній
+                    # Розділяємо рядок по комі
+                    parts = line.split(',')
+                    
+                    # Перевіряємо що отримали 2 частини
+                    if len(parts) == 2:
+                        name = parts[0]    # перша частина - ім'я
+                        salary = parts[1]  # друга частина - зарплата
+                        
+                        # Перетворюємо зарплату в число
+                        salary_number = int(salary)
+                        
+                        # Додаємо до загальної суми
+                        total += salary_number
+                        count += 1
+            
+            # Файл автоматично закриється після виходу з блоку with
+            
+            # Якщо знайшли хоча б одного розробника
+            if count > 0:
+                average = total / count
+                return (total, average)
+            else:
+                return (0, 0)
+                
     except FileNotFoundError:
         print(f"Файл {path} не знайдено!")
         return (0, 0)
